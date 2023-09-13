@@ -11,6 +11,12 @@ class Item:
         self.price = price
         self.quantity = quantity
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return self.__name
+
     def calculate_total_price(self) -> float:
         return self.price * self.quantity
 
@@ -32,7 +38,7 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls):
-        with open('../src/items.csv', encoding="cp1251") as file:
+        with open('/Users/mun/dev/electronics-shop-project/src/items.csv', encoding="cp1251") as file:
             csvfile = csv.DictReader(file)
             for row in csvfile:
                 Item.all.append(Item(row['name'], row['price'], int(row["quantity"])))
@@ -40,7 +46,4 @@ class Item:
 
     @staticmethod
     def string_to_number(value):
-        floated = float(value)
-        rounded = int(round(floated, 0))
-        print(rounded)
-        return rounded
+        return int(float(value))

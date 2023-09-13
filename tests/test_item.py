@@ -18,7 +18,19 @@ def test_apply_discount(item):
 
 
 def test_string_to_number(item):
-    assert item.string_to_number('7.5') == 8
+    assert item.string_to_number('7.5') == 7
     assert item.string_to_number('8.5') == 8
 
+
+def test_instantiate_from_csv():
+    Item.instantiate_from_csv()
+    assert len(Item.all) == 5
+
+
+def test__repr__(item):
+    assert repr(item) == "Item('Смартфон', 1000, 2)"
+
+
+def test__str__(item):
+    assert str(item) == 'Смартфон'
 
