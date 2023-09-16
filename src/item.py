@@ -1,5 +1,4 @@
 import csv
-import pandas as pd
 
 
 class Item:
@@ -10,6 +9,11 @@ class Item:
         self.__name = name
         self.price = price
         self.quantity = quantity
+
+    def __add__(self, other):
+        if issubclass(other.__class__, self.__class__):
+            return self.quantity + other.quantity
+        raise Exception
 
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
