@@ -1,4 +1,8 @@
 import csv
+import os
+
+CURRENT_DIR = os.path.dirname(__file__)
+ITEMS_CSV_PATH = os.path.join(CURRENT_DIR, "items.csv")
 
 
 class Item:
@@ -42,11 +46,11 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls):
-        with open('/Users/mun/dev/electronics-shop-project/src/items.csv', encoding="cp1251") as file:
+        with open(ITEMS_CSV_PATH, encoding="cp1251") as file:
             csvfile = csv.DictReader(file)
             for row in csvfile:
-                Item.all.append(Item(row['name'], row['price'], int(row["quantity"])))
-            return Item.all
+                cls.all.append(cls(row['name'], row['price'], int(row["quantity"])))
+            return cls.all
 
     @staticmethod
     def string_to_number(value):
