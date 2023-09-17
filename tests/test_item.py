@@ -34,3 +34,12 @@ def test__repr__(item):
 def test__str__(item):
     assert str(item) == 'Смартфон'
 
+
+def test__add__(item):
+    itm1 = item
+    itm2 = Item('Смартфон', 1000, 5)
+    total = itm1 + itm2
+    assert total == 7
+
+
+
