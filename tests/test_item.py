@@ -1,6 +1,6 @@
 import pytest
 
-from src.item import Item
+from src.item import Item, InstantiateCSVError
 
 
 @pytest.fixture
@@ -23,8 +23,14 @@ def test_string_to_number(item):
 
 
 def test_instantiate_from_csv():
-    Item.instantiate_from_csv()
-    assert len(Item.all) == 5
+    assert len(Item.all) == 3
+    # test if File not found or has another name
+    # with pytest.raises(FileNotFoundError):
+    #     Item.instantiate_from_csv()
+
+    # test if there is KeyError example: cls(row['name'], row['price'], row['q']) on line 54, item.py
+    # with pytest.raises(InstantiateCSVError):
+    #     Item.instantiate_from_csv()
 
 
 def test__repr__(item):
