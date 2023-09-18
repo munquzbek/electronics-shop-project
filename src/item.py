@@ -5,11 +5,18 @@ CURRENT_DIR = os.path.dirname(__file__)
 ITEMS_CSV_PATH = os.path.join(CURRENT_DIR, "items.csv")
 
 
+class InstantiateCSVError(Exception):
+    def __init__(self, *args, **kwargs):
+        if len(args) < 3:
+            self.message = "Файл item.csv поврежден"
+
+
 class Item:
     pay_rate = 1.0
     all = []
 
     def __init__(self, name: str, price: float, quantity: int):
+        Item.all.append(self)
         self.__name = name
         self.price = price
         self.quantity = quantity
@@ -46,11 +53,15 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls):
-        with open(ITEMS_CSV_PATH, encoding="cp1251") as file:
-            csvfile = csv.DictReader(file)
-            for row in csvfile:
-                cls.all.append(cls(row['name'], row['price'], int(row["quantity"])))
-            return cls.all
+        try:
+            with open(ITEMS_CSV_PATH, encoding="cp1251") as file:
+                csvfile = csv.DictReader(file)
+                for row in csvfile:
+                    cls(row['name'], row['price'], int(row["quantity"]))
+        except FileNotFoundError:
+            raise FileNotFoundError('Отсутствует файл item.csv')
+        except KeyError:
+            raise InstantiateCSVError('Файл item.csv поврежден')
 
     @staticmethod
     def string_to_number(value):
