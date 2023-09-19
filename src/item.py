@@ -42,17 +42,16 @@ class Item:
             self.__name = value[:10]
 
     @classmethod
-    def instantiate_from_csv(cls, file_path='../tests/test_items.csv'):
+    def instantiate_from_csv(cls, file_path='../src/items.csv'):
         try:
             with open(file_path, encoding="cp1251") as file:
                 csvfile = csv.DictReader(file)
                 for row in csvfile:
-                    print(row)
-                    cls(row['name'], row['price'], row['q'])
+                    cls(row['name'], row['price'], row['quantity'])
         except FileNotFoundError:
             raise FileNotFoundError('Отсутствует файл items.csv') from None
         except KeyError:
-            raise InstantiateCSVError('Файл items.csv поврежден') from None
+            raise InstantiateCSVError('Файл items.csv поврежден')
 
     @staticmethod
     def string_to_number(value):
