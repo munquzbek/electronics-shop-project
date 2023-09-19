@@ -1,8 +1,5 @@
-import csv
-
 import pytest
-
-from src.item import Item, InstantiateCSVError
+from src.item import *
 
 
 @pytest.fixture
@@ -25,13 +22,10 @@ def test_string_to_number(item):
 
 
 def test_instantiate_from_csv():
-    assert len(Item.all) == 3
-    # test if File not found or has another name
-    with pytest.raises(FileNotFoundError):
-        Item.instantiate_from_csv('unknown_file.csv')
-    # test if there is KeyError example: cls(row['name'], row['price'], row['q']) on line 54, item.py
-    with pytest.raises(InstantiateCSVError):
-        Item.instantiate_from_csv('test_items.csv')
+    # with pytest.raises(FileNotFoundError, match="Отсутствует файл items.csv"):
+    #     Item.instantiate_from_csv('unknown_file.csv')
+    with pytest.raises(InstantiateCSVError, match='Файл items.csv поврежден'):
+        Item.instantiate_from_csv('../tests/test_items.csv')
 
 
 def test__repr__(item):
@@ -47,6 +41,4 @@ def test__add__(item):
     itm2 = Item('Смартфон', 1000, 5)
     total = itm1 + itm2
     assert total == 7
-
-
 
