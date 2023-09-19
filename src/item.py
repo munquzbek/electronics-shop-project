@@ -1,8 +1,4 @@
 import csv
-import os
-
-CURRENT_DIR = os.path.dirname(__file__)
-ITEMS_CSV_PATH = os.path.join(CURRENT_DIR, "items.csv")
 
 
 class Item:
@@ -46,9 +42,9 @@ class Item:
             self.__name = value[:10]
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls, file_path='../src/items.csv'):
         try:
-            with open(ITEMS_CSV_PATH, encoding="cp1251") as file:
+            with open(file_path, encoding="cp1251") as file:
                 csvfile = csv.DictReader(file)
                 for row in csvfile:
                     cls(row['name'], row['price'], row['quantity'])
