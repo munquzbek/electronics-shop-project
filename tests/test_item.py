@@ -24,6 +24,7 @@ def test_string_to_number(item):
 def test_instantiate_from_csv():
     with pytest.raises(FileNotFoundError, match="Отсутствует файл items.csv"):
         Item.instantiate_from_csv('unknown_file.csv')
+
     with pytest.raises(InstantiateCSVError, match='Файл items.csv поврежден'):
         Item.instantiate_from_csv('tests/test_items.csv')
 
